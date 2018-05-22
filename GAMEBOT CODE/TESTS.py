@@ -3,7 +3,7 @@ import pickle as p
 
 humanPiece = "w"
 
-Data = [
+Data = [  #Manual "scan data" to be used for testing, includes king, double capture
     [   [0, 1, 0, 1, 0, 1, 0, 1],
         [1, 0, 1, 0, 1, 0, 1, 0],
         [0, 1, 0, 1, 0, 1, 0, 0],
@@ -101,7 +101,6 @@ Data = [
         [0, 1, 0, 1, 0, 1, 0, 1],
         [1, 0, 1, 0, 1, 0, 1, 0]]
     ]
-#TODO MAKE SURE A KING STAYS A KING
 c = checkers.checkers()
 print(c.getBoard())
 for turn in Data:

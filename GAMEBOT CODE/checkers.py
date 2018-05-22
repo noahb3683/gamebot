@@ -90,6 +90,7 @@ class checkers:
         oldPieces = list() #Stores the locations of the piece to that need to be removed
         scan = grid.grid(0)
         scan.massSet(scanData)
+        pieceTypeToSet = currentPlayer #this gets changed if their is a missing king, therefore piece moved was a king kindof hacky
         for i in range(8):
             for j in range(8):
                 currentPos = p.location(i, j)
@@ -98,13 +99,15 @@ class checkers:
                 elif scan.get(currentPos)==1 and board.get(currentPos)==" ":
                     pieceToSet = currentPos
                 elif scan.get(currentPos)==0 and not board.get(currentPos)==" ":
+                    if board.get(currentPos)[0] == currentPlayer:
+                        pieceTypeToSet = board.get(currentPos) #if the piece removed was of the current player, set that type to be set
                     oldPieces.append(currentPos)
                 elif scan.get(currentPos)==0 and board.get(currentPos)==" ":
                     continue
                 else:
                     print("ERROR IN SETTING BOARD")
                     return False
-        done = board.set(pieceToSet, currentPlayer)
+        done = board.set(pieceToSet, pieceTypeToSet)
         if done==None:
             print("no move done")
             return False
@@ -155,7 +158,8 @@ class checkers:
             print("ERROR") #some error handling here
             return 0
         else:
-            print("Success")
+            #print("Success")
+            pass
         return 1
     def getCurrentPlayer(self): #used in the master switcher between ai and human and network
         return self.turnM.currentPlayer()
