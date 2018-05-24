@@ -4,14 +4,15 @@ from time import sleep
 outputs = [18, 23, 24, 25, 12, 16, 20, 21]
 inputs = [4, 17, 27, 22, 5, 6, 13, 19]
 boardState = [
-    [1, 0, 0, 0, 0, 0, 1, 0],
-    [0, 1, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 1, 0],
-    [0, 1, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 1, 0],
-    [0, 1, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 1, 0],
-    [0, 1, 0, 0, 0, 0, 0, 1]
+    #a  b  c  d  e  f  g  h
+    [1, 0, 1, 0, 1, 0, 1, 0], #8
+    [0, 1, 0, 1, 0, 1, 0, 1], #7
+    [1, 0, 1, 0, 1, 0, 1, 0], #6
+    [0, 0, 0, 0, 0, 0, 0, 0], #5
+    [0, 0, 0, 0, 0, 0, 0, 0], #4
+    [0, 1, 0, 1, 0, 1, 0, 1], #3
+    [1, 0, 1, 0, 1, 0, 1, 0], #2
+    [0, 1, 0, 1, 0, 1, 0, 1]  #1
 ]
 
 
@@ -24,9 +25,9 @@ for inPin in range (0,8):
     print (inputs[inPin])
 
 
-print (boardState[4][7])
+#print (boardState[4][7])
 
-def WhereAreSquares():
+def WhereAreSquares(): #transmitters need to be horizontal & pickups need to be vertical when wired
     for send in range (0, 8):
         GPIO.output([outputs], 1)
         for receive in range (0, 8):
