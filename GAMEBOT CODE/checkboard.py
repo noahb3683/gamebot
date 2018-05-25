@@ -29,9 +29,9 @@ for inPin in range (0,8):
 
 def WhereAreSquares(): #transmitters need to be horizontal & pickups need to be vertical when wired
     for send in range (0, 8):
-        GPIO.output([outputs], 1)
+        GPIO.output(outputs[send], 1)
         for receive in range (0, 8):
-            if GPIO.input([inputs]):
+            if GPIO.input(inputs[receive]):
                 #boardState[send][receive] = 1
                 print (boardState[send][receive])
             else:
