@@ -2,6 +2,16 @@ import location as p
 import grid
 import turnManager as t
 boardSize = 8
+"""
+Assumes there is a physical board that is sending true/false table of piece locations
+This just stores the board as a 2d array of strings from the true/false table
+Needs to be called from master loop:
+
+getBoard() returns board object, can be directly printed
+updateBoard() takes true/false table passed and updates string version
+check() returns if a player has won, returning that player piece
+nextTurn() changes active player
+"""
 class checkers:
     def possibleMoves(self, startLocation, piece):
         #used to find possible moves in order to find valid moves
@@ -163,7 +173,7 @@ class checkers:
         return 1
     def getCurrentPlayer(self): #used in the master switcher between ai and human and network
         return self.turnM.currentPlayer()
-    def check(self):
+    def check(self): #Checks if someone has won
         result = self.CheckForWin(self.board)
         if not result == 0:
             print(result, "wins")

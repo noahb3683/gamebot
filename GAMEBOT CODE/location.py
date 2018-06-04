@@ -1,7 +1,14 @@
 class location:
-    def __init__(self, r, c):
-        self.r = r
-        self.c = c
+    def __init__(self, r, c=0):
+        if type(r) is int:
+            self.r = r
+            self.c = c
+        elif type(r) is location:
+            self.r = r.r
+            self.c = r.c
+        else:
+            self.r = r[0]
+            self.c = r[1]
         self.count = 0 #counts number of times its updated
     def row(self):
         return self.r
