@@ -17,6 +17,9 @@ class grid:
             return None
         self.grid[location.row()][location.column()] = value
         return True
+    def __iter__(self):
+        for row in self.grid:
+            yield row        
     def massSet(self, values):
         for r in range(8):
             for c in range(8):

@@ -26,12 +26,17 @@ class checkerLogic:
         startingLocation = moves[0]
         for i in range(1, len(moves)): #to account for starting move
             currentLocation = moves[i]
-            direction = np.array(currentLocation-startingLocation)//2 
+            direction = currentLocation-startingLocation #Direction of piece moved converted to numpy for division ease
+            for i in range(2):
+                direction[i] = round(direction[i]/2)
             checkLocation = p.location(currentLocation-p.location(direction)) #Location of piece hopped over
-
-            if not self.realBoard.get(startingLocation)[0] == self.realBoard.get(checkLocation)[0]:
-                self.realBoard.set(checkLocation, " ") #set blank if not of the same type as piece moved
+            if not np.prod(direction) == 0: #If hopped
+                if not self.realBoard.get(checkLocation)[0] == peice:
+                    self.realBoard.set(checkLocation, " ") #set blank where hopped
+                else:
+                    print("Move not allowed") #Can't hop your own peice type
+                    return 0
             self.realBoard.set(startingLocation, " ") #Set old spot blank
             self.realBoard.set(currentLocation, peice) #Set new spot with piece
             startingLocation = currentLocation #Update for next tick
-        print(self.realBoard)
+        return 1
