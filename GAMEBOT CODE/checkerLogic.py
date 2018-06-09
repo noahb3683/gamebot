@@ -7,18 +7,31 @@ Used to play checkers without the board for testing the AI
 Sketchy because it needs to output board to true/false table to properly test all the code
 """
 class checkerLogic:
-    def __init__(self, startingConfig):
-        self.realBoard = startingConfig
+    def __init__(self):
+        self.startingBoard = [
+            [" ", "w", " ", "w", " ", "w", " ", "w"],
+            ["w", " ", "w", " ", "w", " ", "w", " "],
+            [" ", "w", " ", "w", " ", "w", " ", "w"],
+            [" ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " "],
+            ["b", " ", "b", " ", "b", " ", "b", " "],
+            [" ", "b", " ", "b", " ", "b", " ", "b"],
+            ["b", " ", "b", " ", "b", " ", "b", " "]
+            ]
+        self.realBoard = grid.grid(" ")
+        self.realBoard.massSet(self.startingBoard) #init board
     def TFoutput(self): #Converts board into T/F table to simulate board
         output = [[0 for i in range(8)] for j in range(8)]
-        for i in self.realBoard.getGrid():
-            for j in i:
-                if not j==" ":
+        for i in range(8):
+            for j in range(8):
+                if not self.realBoard.get(p.location(i, j))==" ":
                     output[i][j]=1
         return output
     def updateBoard(self, board): #Updates copy of board, shouldn't be needed
         self.realBoard = board
     def move(self, moves):#location of peice to move from to each spot in array, removes pieces in way
+        if moves == None:
+            return 0
         if len(moves) < 2:
             #Not enough moves entered
             return 0
