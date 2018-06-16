@@ -3,10 +3,16 @@ from airand import *
 from aismart import *
 from human import *
 
+import time
+start_time = time.time()
+'''
+Allows for two players to play multiple games at once
+Does NOT print board
+Just prints stats of win record at end of game
+'''
 """Create the players"""
-p1 = AIrand("x")
-p2 = AIrand("o")
-#print("You are 'o'")
+p1 = AIrand("x", "o")
+p2 = AIsmart("o", "x")
 """add players to array"""
 players = [p1, p2]
 
@@ -20,24 +26,21 @@ boardState = [
     ]
 
 wins = {"x wins": 0, "o wins": 0, "Stalemate":0}
-for i in range(1000):
+total_games = 1000
+for i in range(total_games):
     while True:
-        #print(game.currentPlayer(), "turn")
-        #game.printBoard()
         move = game.currentPlayer().getMove(game.board)
         boardState[move[0]][move[1]] = 1
         if not game.updateBoard(boardState) == 1:
-            #print("Invalid Move")
+            #if move is invalid get it to try again
             continue
         result = game.checkForWin()
         if result:
-            #game.printBoard()
-            #print("==================")
-            #print(result)
             wins[result] += 1
             break
         game.nextTurn()
     #Reset everything
+    #game.printBoard()
     boardState = [
     [0,0,0],
     [0,0,0],
@@ -45,4 +48,9 @@ for i in range(1000):
     ]
     game = XO.XO(3, players)
     game.start()
-print(wins)
+
+for key, value in wins.items():
+    print(key, value/total_games,"%")
+print(total_games, "were played")
+
+print("this took %s seconds" % (time.time() - start_time))

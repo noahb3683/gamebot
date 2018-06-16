@@ -1,9 +1,13 @@
 import random
 import grid
 import location as p
+'''
+Pure random move from possible moves
+'''
 class AIrand:
-    def __init__(self, piece):
+    def __init__(self, piece, oppopiece):
         self.piece = piece
+        self.oppopiece = oppopiece
     def getMove(self, board):
         #first get all allowed moves then choose one at random
         allowed_moves = []

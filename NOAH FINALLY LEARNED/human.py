@@ -1,11 +1,15 @@
 import random
 import grid
 import location as p
+'''
+Allows human to play by taking in their move from input
+'''
 class Human:
-    def __init__(self, piece):
+    def __init__(self, piece, oppopiece):
         self.piece = piece
+        print("A human is", piece)
+        self.oppopiece = oppopiece
     def getMove(self, board):
-        #first get all allowed moves then choose one at random
         x = int(input())
         y = int(input())
         return [x,y]

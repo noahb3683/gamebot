@@ -11,7 +11,7 @@ class XO:
         for i in range(self.board.getSize()):
             for j in range(self.board.getSize()):
                 if inBoard[i][j] == 1 and self.board.get(p.location(i, j)) == " ":
-                    self.board.set(p.location(i,j), self.turnM.currentPlayer())
+                    self.board.set(p.location(i,j), self.turnM.currentPlayer().getPiece())
                     #Success
                     self.recent_move.update(i, j)
                     return 1
@@ -21,27 +21,27 @@ class XO:
     def checkForWin(self):
         #Rows
         for i in range(self.board_size):
-            if not self.board.get(p.location(self.recent_move.row(), i)) == self.turnM.currentPlayer():
+            if not self.board.get(p.location(self.recent_move.row(), i)) == self.turnM.currentPlayer().getPiece():
                 break
             if i == (self.board_size-1):
                 return str(self.turnM.currentPlayer()) + " wins"
         #Column
         for i in range(self.board_size):
-            if not self.board.get(p.location(i, self.recent_move.column())) == self.turnM.currentPlayer():
+            if not self.board.get(p.location(i, self.recent_move.column())) == self.turnM.currentPlayer().getPiece():
                 break
             if i == (self.board_size-1):
                 return str(self.turnM.currentPlayer()) + " wins"
         #Diag
         if self.recent_move.row() == self.recent_move.column():
             for i in range(self.board_size):
-                if not self.board.get(p.location(i, i)) == self.turnM.currentPlayer():
+                if not self.board.get(p.location(i, i)) == self.turnM.currentPlayer().getPiece():
                     break
                 if i == (self.board_size-1):
                     return str(self.turnM.currentPlayer()) + " wins"
         #Other Diag
         if (self.recent_move.row() + self.recent_move.column()) == (self.board_size - 1):
             for i in range(self.board_size):
-                if not self.board.get(p.location(i, (self.board_size-1)-i)) == self.turnM.currentPlayer():
+                if not self.board.get(p.location(i, (self.board_size-1)-i)) == self.turnM.currentPlayer().getPiece():
                     break
                 if i == (self.board_size-1):
                     return str(self.turnM.currentPlayer()) + " wins"

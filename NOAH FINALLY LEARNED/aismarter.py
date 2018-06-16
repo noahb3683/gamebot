@@ -3,10 +3,6 @@ import grid
 import location as p
 import numpy as np
 import copy
-'''
-Looks one move ahead to check if it or its opponent can win
-Else picks random allowed move
-'''
 class AIsmart:
     def __init__(self, piece, oppopiece):
         self.piece = piece
@@ -25,7 +21,8 @@ class AIsmart:
                 if board.get(p.location(i,j)) == " ":
                     allowed_moves.append([i,j])
         output = []
-        for move in allowed_moves:#check to see if someone can win next turn
+
+        for move in allowed_moves:#try to take corner else random
             tempBoard = copy.deepcopy(board.getGrid())
             tempBoard[move[0]][move[1]] = self.piece
             if self.checkForWin(tempBoard) == self.piece:
