@@ -1,11 +1,12 @@
 import XO
 from airand import *
+from aismart import *
 from human import *
 
 """Create the players"""
 p1 = AIrand("x")
-p2 = Human("o")
-print("You are 'o'")
+p2 = AIrand("o")
+#print("You are 'o'")
 """add players to array"""
 players = [p1, p2]
 
