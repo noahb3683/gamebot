@@ -12,8 +12,6 @@ class turnManager:
         self.currentTurnNum += 1
         self.turnCount += 1
         self.currentTurnNum = self.currentTurnNum%self.numberOfTurns
-        #if self.currentTurnNum >= self.numberOfTurns:
-        #    self.currentTurnNum = 0
         self.currentTurn = self.turns[self.currentTurnNum]
     def count(self):
         return self.turnCount
@@ -21,3 +19,6 @@ class turnManager:
         self.currentTurnNum = round(random.uniform(0, self.numberOfTurns-1))
         self.currentTurn = self.turns[self.currentTurnNum]
         self.turnCount += 1
+    def getPlayersInOrder(self):
+        for i in range(self.numberOfTurns):
+            yield self.turns[(self.currentTurnNum+i) % self.numberOfTurns]

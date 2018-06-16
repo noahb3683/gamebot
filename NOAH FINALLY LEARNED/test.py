@@ -1,7 +1,16 @@
 import XO
+from airand import *
+from human import *
 
-game = XO.XO(3)
-game.start()
+"""Create the players"""
+p1 = AIrand("x")
+p2 = Human("o")
+print("You are 'o'")
+"""add players to array"""
+players = [p1, p2]
+
+game = XO.XO(3, players)
+game.start() #choose starting player
 
 boardState = [
     [0,0,0],
@@ -11,16 +20,16 @@ boardState = [
 while True:
     print(game.currentPlayer(), "turn")
     game.printBoard()
-    x = int(input())
-    y = int(input())
-    boardState[x][y] = 1
+    move = game.currentPlayer().getMove(game.board)
+    boardState[move[0]][move[1]] = 1
     if not game.updateBoard(boardState) == 1:
         print("Invalid Move")
         continue
     result = game.checkForWin()
     if result:
-        print(result)
         game.printBoard()
+        print("==================")
+        print(result)
         break
     game.nextTurn()
     
