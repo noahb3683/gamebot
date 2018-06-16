@@ -14,12 +14,13 @@ while True:
     x = int(input())
     y = int(input())
     boardState[x][y] = 1
-    print(boardState)
     if not game.updateBoard(boardState) == 1:
+        print("Invalid Move")
         continue
     result = game.checkForWin()
     if result:
         print(result)
+        game.printBoard()
         break
     game.nextTurn()
     

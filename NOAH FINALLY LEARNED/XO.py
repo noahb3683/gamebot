@@ -15,10 +15,8 @@ class XO:
                     #Success
                     self.recent_move.update(i, j)
                     return 1
-                elif inBoard[i][j] == 1 and not self.board.get(p.location(i, j)) == " ":
-                    #Cheater/Error in fetching board
-                    return -1
         #No update
+        print("nothing changed")
         return 0
     def checkForWin(self):
         #Rows
