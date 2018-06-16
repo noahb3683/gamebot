@@ -46,7 +46,8 @@ class XO:
                 if i == (self.board_size-1):
                     return self.turnM.currentPlayer() + " wins"
         #Stalemate
-        if self.turnM == self.board_size**2:
+        print(self.turnM.count())
+        if self.turnM.count() == self.board_size**2:
             return "Stalemate"
         return None
     def printBoard(self):

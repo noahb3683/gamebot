@@ -15,8 +15,9 @@ class turnManager:
         #if self.currentTurnNum >= self.numberOfTurns:
         #    self.currentTurnNum = 0
         self.currentTurn = self.turns[self.currentTurnNum]
-    def numberOfTurns(self):
+    def count(self):
         return self.turnCount
     def randomizePlayer(self):
         self.currentTurnNum = round(random.uniform(0, self.numberOfTurns-1))
         self.currentTurn = self.turns[self.currentTurnNum]
+        self.turnCount += 1
