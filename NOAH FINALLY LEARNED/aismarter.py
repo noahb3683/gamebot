@@ -3,8 +3,9 @@ import grid
 import location as p
 import numpy as np
 '''
-Looks two moves ahead to check if it or its opponent can win
-Else picks random allowed move
+Looks all the moves ahead to check if it or its opponent can win
+Defaults to 0,0
+https://medium.freecodecamp.org/how-to-make-your-tic-tac-toe-game-unbeatable-by-using-the-minimax-algorithm-9d690bad4b37
 '''
 class AIsmarter:
     def __init__(self, piece, oppopiece):
