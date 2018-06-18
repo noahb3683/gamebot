@@ -1,5 +1,9 @@
 import location as p
 board_size = 3
+"""
+Used for board in TicTacToe and Checkers
+Could have been potentailly just a 2d array but this provides safe checking and fancy printing
+"""
 class grid:
     def __init__(self, default, board_size=3):
         self.board_size = board_size

@@ -1,6 +1,10 @@
 import turnManager
 import location as p
 import grid
+"""
+Class to play XO on board of size given
+Could be used to play multi piece checkers
+"""
 class XO:
     def __init__(self, board_size, players):
         self.turnM = turnManager.turnManager(players)
@@ -8,17 +12,25 @@ class XO:
         self.recent_move = p.location(-1,-1)
         self.board_size = board_size
     def updateBoard(self, inBoard):
+        """
+        Takes 2d  array of 1/0 's and converts to string board
+        """
         for i in range(self.board.getSize()):
             for j in range(self.board.getSize()):
                 if inBoard[i][j] == 1 and self.board.get(p.location(i, j)) == " ":
                     self.board.set(p.location(i,j), self.turnM.currentPlayer().getPiece())
                     #Success
-                    self.recent_move.update(i, j)
+                    self.recent_move.update(i, j) #Store the most recent move to make checking for win faster
                     return 1
         #No update
         print("nothing changed")
         return 0
     def checkForWin(self):
+        """
+        If game over returns player piece and 'wins' to be printed
+        Elif game stalemate returns stalemate
+        Else returns nothing
+        """
         #Rows
         for i in range(self.board_size):
             if not self.board.get(p.location(self.recent_move.row(), i)) == self.turnM.currentPlayer().getPiece():

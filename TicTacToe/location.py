@@ -1,3 +1,8 @@
+"""
+Class to store locations on grid
+includes subtraction and addition
+and validitation for checkers board
+"""
 class location:
     def __init__(self, r, c=0):
         if type(r) is int:

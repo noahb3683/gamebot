@@ -4,7 +4,6 @@ import location as p
 import numpy as np
 '''
 Looks all the moves ahead to check if it or its opponent can win
-Defaults to 0,0
 https://medium.freecodecamp.org/how-to-make-your-tic-tac-toe-game-unbeatable-by-using-the-minimax-algorithm-9d690bad4b37
 '''
 class AIsmarter:
@@ -17,6 +16,7 @@ class AIsmarter:
             [0,2],
             [2,2]
             ]
+        self.preCalc = {} #Dictionary of boardstates and players with best move
     def allowedMoves(self, board):
         allowed_moves = []
         for i in range(len(board)):
@@ -25,13 +25,21 @@ class AIsmarter:
                     allowed_moves.append([i,j])
         return allowed_moves
     def minMax(self, board, player):
-        #print(board)
+        """
+        Uses dictionary of (board and player) to save recursion
+        """
+        b = np.array(board) #use numpy to flatten and merge
+        b = b.reshape((len(board)**2)) #Flatten
+        b = np.concatenate((b, np.array([player]))) #add player to end
+        b = tuple(b) #Convert to tuple since need imutable object
+        if b in self.preCalc:
+            return self.preCalc[b]
         allowed = self.allowedMoves(board)
         temp = self.checkForWin(board)
         if temp == self.piece:
-            return [1]
+            return [1+random.random()]#To prevent first move from always taken
         elif temp == self.oppopiece:
-            return [-1]
+            return [-1-random.random()]#adds some unpredicatability to AI
         elif len(allowed) == 0:
             return [0]
         moves = []
@@ -41,14 +49,18 @@ class AIsmarter:
             tempBoard[move[0]][move[1]] = player
             if player == self.piece:
                 score = self.minMax(tempBoard, self.oppopiece)
-                temp.append(score[0])
+                temp.append(score[0])#Keep just the score
             else:
                 score = self.minMax(tempBoard, self.piece)
                 temp.append(score[0])
             temp.append(move)#store location
-            tempBoard[move[0]][move[1]] = " "
+            tempBoard[move[0]][move[1]] = " "#Make sure to reset board
             moves.append(temp)
-        #Find best move
+        """
+        Find highest scoring/lowest scoring move
+        Find highest on its turn
+        Finds lowest on oppo's turn
+        """
         if player == self.piece:
             best = -10000
             for move in moves:
@@ -61,14 +73,10 @@ class AIsmarter:
                 if move[0] < best:
                     best = move[0]
                     spot = move[1]
+        self.preCalc[b] = (best,spot)
         return [best,spot]
     def getMove(self, board):
-        #first get all allowed moves then choose one at random
-        b = np.array(board.getGrid())
-        b = b.reshape((len(board.getGrid())**2))
-        if not "x" in b and not "o" in b:
-            return [0,0]
-        return self.minMax(board.getGrid(), self.piece)[1]
+        return self.minMax(board.getGrid(), self.piece)[1] #return move only
     def checkForWin(self, board):
         b = np.array(board)
         size = len(board)

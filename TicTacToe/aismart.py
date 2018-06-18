@@ -10,12 +10,6 @@ class AIsmart:
     def __init__(self, piece, oppopiece):
         self.piece = piece
         self.oppopiece = oppopiece
-        self.corners = [
-            [0,0],
-            [2,0],
-            [0,2],
-            [2,2]
-            ]
     def getMove(self, board):
         #first get all allowed moves then choose one at random
         allowed_moves = []
@@ -24,24 +18,25 @@ class AIsmart:
                 if board.get(p.location(i,j)) == " ":
                     allowed_moves.append([i,j])
         output = []
-        for move in allowed_moves:#check to see if someone can win next turn
+        for move in allowed_moves:
             tempBoard = board.getGrid()
+            """For each open square check if either player can win next turn"""
             tempBoard[move[0]][move[1]] = self.piece
             if self.checkForWin(tempBoard) == self.piece:
                 output = move
-                tempBoard[move[0]][move[1]] = " "
+                tempBoard[move[0]][move[1]] = " " #Reset since python things
                 break
             tempBoard[move[0]][move[1]] = self.oppopiece
             if self.checkForWin(tempBoard) == self.oppopiece:
                 output = move
-                tempBoard[move[0]][move[1]] = " "
+                tempBoard[move[0]][move[1]] = " " #Reset since python things
                 break
-            tempBoard[move[0]][move[1]] = " "
+            tempBoard[move[0]][move[1]] = " " #Reset since python things
         else:
             output = random.choice(allowed_moves)
         return output
     def checkForWin(self, board):
-        b = np.array(board)
+        b = np.array(board) #used for ranges to get columns easily
         size = len(board)
         for i in range(size):
             if all(b[i][j] == b[i][j-1] for j in range(1, size)) and not b[i][0] == " ":
@@ -59,7 +54,7 @@ class AIsmart:
                 break
         else:
             return b[0][size-1] # diagonal win
-        return None
+        return None #no win
     def getPiece(self):
         return self.piece
     def setPiece(self, piece):
