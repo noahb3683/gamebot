@@ -37,6 +37,8 @@ def WhereAreSquares():
             else:
                 boardState[send][receive] = 0
                 print ("nobody home & laserboi is a sad sad laserboi... :(")
+        GPIO.output(outputs[send], 0)
+        
 WhereAreSquares()
 for poicon in boardState:
     print (poicon)
