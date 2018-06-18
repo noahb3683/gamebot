@@ -2,7 +2,6 @@ import random
 import grid
 import location as p
 import numpy as np
-import copy
 '''
 Looks one move ahead to check if it or its opponent can win
 Else picks random allowed move
@@ -26,15 +25,18 @@ class AIsmart:
                     allowed_moves.append([i,j])
         output = []
         for move in allowed_moves:#check to see if someone can win next turn
-            tempBoard = copy.deepcopy(board.getGrid())
+            tempBoard = board.getGrid()
             tempBoard[move[0]][move[1]] = self.piece
             if self.checkForWin(tempBoard) == self.piece:
                 output = move
+                tempBoard[move[0]][move[1]] = " "
                 break
             tempBoard[move[0]][move[1]] = self.oppopiece
             if self.checkForWin(tempBoard) == self.oppopiece:
                 output = move
+                tempBoard[move[0]][move[1]] = " "
                 break
+            tempBoard[move[0]][move[1]] = " "
         else:
             output = random.choice(allowed_moves)
         return output

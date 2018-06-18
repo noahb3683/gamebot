@@ -1,6 +1,7 @@
 import XO
 from airand import *
 from aismart import *
+from aismarter import *
 from human import *
 
 import time
@@ -11,23 +12,19 @@ Does NOT print board
 Just prints stats of win record at end of game
 '''
 """Create the players"""
-p1 = AIrand("x", "o")
-p2 = AIsmart("o", "x")
+p1 = AIsmart("x", "o")
+p2 = AIrand("o", "x")
 """add players to array"""
 players = [p1, p2]
 
-game = XO.XO(3, players)
+game = XO.XO(4, players)
 game.start() #choose starting player
 
-boardState = [
-    [0,0,0],
-    [0,0,0],
-    [0,0,0]
-    ]
+boardState = [[0 for i in range(game.board_size)] for j in range(game.board_size)]
 
 wins = {"x wins": 0, "o wins": 0, "Stalemate":0}
-total_games = 1000
-for i in range(total_games):
+total_games = 10
+for i in range(1,total_games+1):
     while True:
         move = game.currentPlayer().getMove(game.board)
         boardState[move[0]][move[1]] = 1
@@ -48,9 +45,11 @@ for i in range(total_games):
     ]
     game = XO.XO(3, players)
     game.start()
+    if i%2 == 0:
+        print("done", i, "games")
 
 for key, value in wins.items():
-    print(key, value/total_games,"%")
+    print(key, value/total_games*100,"%")
 print(total_games, "were played")
 
 print("this took %s seconds" % (time.time() - start_time))

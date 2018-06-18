@@ -1,23 +1,20 @@
 import XO
 from airand import *
 from aismart import *
+from aismarter import *
 from human import *
 
 """Create the players"""
-p1 = AIrand("x")
-p2 = AIrand("o")
+p1 = AIsmart("x", "o")
+p2 = Human("o", "x")
 #print("You are 'o'")
 """add players to array"""
 players = [p1, p2]
 
-game = XO.XO(3, players)
+game = XO.XO(4, players)
 game.start() #choose starting player
 
-boardState = [
-    [0,0,0],
-    [0,0,0],
-    [0,0,0]
-    ]
+boardState = [[0 for i in range(game.board_size)] for j in range(game.board_size)]
 while True:
     print(game.currentPlayer(), "turn")
     game.printBoard()

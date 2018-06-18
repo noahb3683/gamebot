@@ -2,8 +2,11 @@ import random
 import grid
 import location as p
 import numpy as np
-import copy
-class AIsmart:
+'''
+Looks two moves ahead to check if it or its opponent can win
+Else picks random allowed move
+'''
+class AIsmarter:
     def __init__(self, piece, oppopiece):
         self.piece = piece
         self.oppopiece = oppopiece
@@ -13,28 +16,58 @@ class AIsmart:
             [0,2],
             [2,2]
             ]
+    def allowedMoves(self, board):
+        allowed_moves = []
+        for i in range(len(board)):
+            for j in range(len(board)):
+                if board[i][j] == " ":
+                    allowed_moves.append([i,j])
+        return allowed_moves
+    def minMax(self, board, player):
+        #print(board)
+        allowed = self.allowedMoves(board)
+        temp = self.checkForWin(board)
+        if temp == self.piece:
+            return [1]
+        elif temp == self.oppopiece:
+            return [-1]
+        elif len(allowed) == 0:
+            return [0]
+        moves = []
+        for move in allowed:
+            temp = []
+            tempBoard = board
+            tempBoard[move[0]][move[1]] = player
+            if player == self.piece:
+                score = self.minMax(tempBoard, self.oppopiece)
+                temp.append(score[0])
+            else:
+                score = self.minMax(tempBoard, self.piece)
+                temp.append(score[0])
+            temp.append(move)#store location
+            tempBoard[move[0]][move[1]] = " "
+            moves.append(temp)
+        #Find best move
+        if player == self.piece:
+            best = -10000
+            for move in moves:
+                if move[0] > best:
+                    best = move[0]
+                    spot = move[1]
+        else:
+            best = 10000
+            for move in moves:
+                if move[0] < best:
+                    best = move[0]
+                    spot = move[1]
+        return [best,spot]
     def getMove(self, board):
         #first get all allowed moves then choose one at random
-        allowed_moves = []
-        for i in range(board.getSize()):
-            for j in range(board.getSize()):
-                if board.get(p.location(i,j)) == " ":
-                    allowed_moves.append([i,j])
-        output = []
-
-        for move in allowed_moves:#try to take corner else random
-            tempBoard = copy.deepcopy(board.getGrid())
-            tempBoard[move[0]][move[1]] = self.piece
-            if self.checkForWin(tempBoard) == self.piece:
-                output = move
-                break
-            tempBoard[move[0]][move[1]] = self.oppopiece
-            if self.checkForWin(tempBoard) == self.oppopiece:
-                output = move
-                break
-        else:
-            output = random.choice(allowed_moves)
-        return output
+        b = np.array(board.getGrid())
+        b = b.reshape((len(board.getGrid())**2))
+        if not "x" in b and not "o" in b:
+            return [0,0]
+        return self.minMax(board.getGrid(), self.piece)[1]
     def checkForWin(self, board):
         b = np.array(board)
         size = len(board)

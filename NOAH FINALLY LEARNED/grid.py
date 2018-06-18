@@ -2,7 +2,7 @@ import location as p
 board_size = 3
 class grid:
     def __init__(self, default, board_size=3):
-        self.board_size = 3
+        self.board_size = board_size
         self.grid = [[default for i in range(self.board_size)] for j in range(self.board_size)]
     def reset(self, default):
         self.grid = [[default for i in range(self.board_size)] for j in range(self.board_size)]
