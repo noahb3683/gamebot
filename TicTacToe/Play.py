@@ -3,12 +3,13 @@ from airand import *
 from aismart import *
 from aismarter import *
 from human import *
+from humanNetworked import *
 """
 Used to play a single game of checkers includes print statements for human
 """
 """Create the players"""
 p1 = AIsmarter("x", "o")
-p2 = Human("o", "x")
+p2 = NetHuman("o", "x")
 """add players to array"""
 players = [p1, p2]
 

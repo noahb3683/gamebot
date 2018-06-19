@@ -13,12 +13,12 @@ Just prints stats of win record at end of games
 '''
 """Create the players"""
 p1 = AIsmarter("x", "o")
-p2 = AIrand("o", "x")
+p2 = AIsmart("o", "x")
 """add players to array"""
 players = [p1, p2]
 
 wins = {"x wins": 0, "o wins": 0, "Stalemate":0} #Stores using a key of the return value from checkForWin function
-total_games = 100000
+total_games = 1000
 
 for i in range(1,total_games+1):
     game = XO.XO(3, players)
@@ -35,6 +35,7 @@ for i in range(1,total_games+1):
             wins[result] += 1
             break
         game.nextTurn()
+    #game.printBoard()
     if i%int(total_games/10) == 0:
         print("done", i, "games")
 
